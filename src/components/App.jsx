@@ -1,43 +1,49 @@
 import React, { useState } from 'react';
 
 function App() {
-  const [firstNameValue, setFirstNameValue] = useState('');
-  const [lastNameValue, setLastNameValue] = useState('');
+  const [fullName, setFullName] = useState({
+    fName: '',
+    lName: '',
+  });
 
-  const [firstSubmitValue, setFirstSubmitValue] = useState('');
-  const [lastSubmitValue, setLastSubmitValue] = useState('');
+  function handleChange(event) {
+    const newValue = event.target.value;
+    const inputName = event.target.name;
 
-  function changeHandler(event) {
-    setFirstNameValue(event.target.value);
-    setLastNameValue(event.target.value);
-    console.log(event.target);
-  }
-
-  function clickHandler(event) {
-    setFirstSubmitValue(firstNameValue);
-    setLastSubmitValue(lastNameValue);
-    event.preventDefault();
+    setFullName(function (prevValue) {
+      if (inputName === 'fName') {
+        return {
+          fName: newValue,
+          lName: prevValue.lName,
+        };
+      } else if (inputName === 'lName') {
+        return {
+          fName: prevValue.fName,
+          lName: newValue,
+        };
+      }
+    });
   }
 
   return (
     <div className='container'>
       <h1>
-        Hello {firstSubmitValue} {lastSubmitValue}
+        Hello {fullName.fName} {fullName.lName}
       </h1>
       <form>
         <input
           name='fName'
           placeholder='First Name'
-          value={fistName}
-          onChange={changeHandler}
+          value={fullName.fName}
+          onChange={handleChange}
         />
         <input
           name='lName'
           placeholder='Last Name'
-          value={fistName}
-          onChange={changeHandler}
+          value={fullName.lName}
+          onChange={handleChange}
         />
-        <button onClick={clickHandler}>Submit</button>
+        <button>Submit</button>
       </form>
     </div>
   );
