@@ -4,6 +4,7 @@ function App() {
   const [fullName, setFullName] = useState({
     fName: '',
     lName: '',
+    email: '',
   });
 
   function handleChange(event) {
@@ -14,11 +15,19 @@ function App() {
         return {
           fName: value,
           lName: prevValue.lName,
+          email: prevValue.email,
         };
       } else if (name === 'lName') {
         return {
           fName: prevValue.fName,
           lName: value,
+          email: prevValue.email,
+        };
+      } else if (name === 'email') {
+        return {
+          fName: prevValue.fName,
+          lName: prevValue.lName,
+          email: value,
         };
       }
     });
@@ -29,6 +38,7 @@ function App() {
       <h1>
         Hello {fullName.fName} {fullName.lName}
       </h1>
+      <p>{fullName.email}</p>
       <form>
         <input
           name='fName'
@@ -40,6 +50,12 @@ function App() {
           name='lName'
           placeholder='Last Name'
           value={fullName.lName}
+          onChange={handleChange}
+        />
+        <input
+          name='email'
+          placeholder='Email'
+          value={fullName.email}
           onChange={handleChange}
         />
         <button>Submit</button>
